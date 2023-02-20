@@ -2,7 +2,6 @@
 % Please edit documentation in R/polyFMUtility.R
 \name{is.dpss}
 \alias{is.dpss}
-\alias{is.deriv}
 \title{is.dpss}
 \usage{
 is.dpss(obj)

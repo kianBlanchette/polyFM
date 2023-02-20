@@ -1,4 +1,5 @@
-dyn.load("modF.so")
+#dyn.load("modF.so")
+#' @importFrom multitaper dpss
 
 #' @name dpssap
 #' @aliases dpssap
@@ -15,7 +16,6 @@ dyn.load("modF.so")
 #' @references D. J. Thomson, "Polynomial phase demodulation in multitaper analysis," 2009 IEEE/SP 15th Workshop on Statistical Signal Processing, 2009, pp. 401-404, doi: 10.1109/SSP.2009.5278553.
 #' @references D. J. Thomson, "Inverse-constrained projection filters," Proc. SPIE 4478, Wavelets: Applications in Signal and Image Processing IX, (5 December 2001); https://doi.org/10.1117/12.449708
 #' @author Created by Wesley Burr, edited slightly by Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #'  N <- 1000
@@ -106,7 +106,6 @@ dpssap <- function(V, maxdeg, alpha=0.75) {
 #' @usage is.dpss(obj)
 #' @param obj An R object
 #' @author Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -131,7 +130,6 @@ is.dpss <- function(obj){
 #' @usage is.deriv(obj)
 #' @param obj An R object
 #' @author Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -156,7 +154,6 @@ is.deriv <- function(obj){
 #' @usage is.ap(obj)
 #' @param obj An R object
 #' @author Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1000
@@ -185,7 +182,6 @@ is.ap <- function(obj){
 #' @returns efnDeriv An N x K matrix whose columns contain the derivatives of the first K Slepian sequences.
 #' @references  Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
 #' @author Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -234,7 +230,6 @@ dpssDeriv <- function(DW,NW){
 #' @returns MAXES A list of size P, where P is the number of polynomial degrees for which the F statistics were computed. Each element of the list contains the indices corresponding to the Fourier frequencies where local maxima can be found.
 #' @references  Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
 #' @author Kian Blanchette, based on code written by Dave Riegert
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -298,7 +293,6 @@ findLocalFMaxM <- function(obj, k, cutoff){
 #' @references D. J. Thomson, "Inverse-constrained projection filters," Proc. SPIE 4478, Wavelets: Applications in Signal and Image Processing IX, (5 December 2001); https://doi.org/10.1117/12.449708
 #' @references Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
 #' @author Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #'  N <- 1024
@@ -347,7 +341,6 @@ polyInverse <- function(V, Vdot, maxdeg = 0, alpha = 0.75){
 #' @references D. J. Thomson, "Polynomial phase demodulation in multitaper analysis," 2009 IEEE/SP 15th Workshop on Statistical Signal Processing, 2009, pp. 401-404, doi: 10.1109/SSP.2009.5278553.
 #' @references D. J. Thomson, "Inverse-constrained projection filters," Proc. SPIE 4478, Wavelets: Applications in Signal and Image Processing IX, (5 December 2001); https://doi.org/10.1117/12.449708
 #' @author Created by Wesley Burr, edited slightly and expanded by Kian Blanchette
-#' @import multitaper
 #' @export
 #' @examples
 #'  N <- 1024
@@ -453,7 +446,6 @@ apDeriv <- function(V, maxdeg, alpha=0.75) {
 #' @returns cmv the vector containing the complex mean values
 #' @author Kian Blanchette
 #' @references Thomson, David J. "Spectrum estimation and harmonic analysis." Proceedings of the IEEE 70.9 (1982): 1055-1096.
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -501,7 +493,7 @@ HarmonicF <- function(yk, dw){
 #' @returns Fp Matrix of polynomial modulated test statistics
 #' @author Kian Blanchette
 #' @references Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
-#' @import multitaper
+#' @useDynLib polyFM, modF, modFcomp
 #' @export
 #' @examples
 #' N <- 1024
@@ -542,7 +534,6 @@ modF <- function(mxdeg, nord, FPcoef, Fcoef, nfreqs){
 #' @author Kian Blanchette
 #' @references D. J. Thomson, "Inverse-constrained projection filters," Proc. SPIE 4478, Wavelets: Applications in Signal and Image Processing IX, (5 December 2001); https://doi.org/10.1117/12.449708
 #' @references  Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -573,7 +564,7 @@ IFcompute <- function(yk, V, Vdot){
 }
 
 
-jkFreq <- function(Phi, H, freq){
+.jkFreq <- function(Phi, H, freq){
   K <- nrow(H)
   P <- ncol(H)
   stopifnot(K > P)
@@ -600,7 +591,7 @@ jkFreq <- function(Phi, H, freq){
   return(jk)
 }
 
-jackknifeModulatedF <- function(yk, derivIN = NULL, apIN = NULL, dpssIN = NULL, freq){
+.jackknifeModulatedF <- function(yk, derivIN = NULL, apIN = NULL, dpssIN = NULL, freq){
 
   #speed version of this function. everything must be passed in.
   #just computes modified F3. note that H matrix is missing first column,
@@ -642,7 +633,6 @@ jackknifeModulatedF <- function(yk, derivIN = NULL, apIN = NULL, dpssIN = NULL, 
 #' @returns yk The K x nFFT matrix of eigencoefficients
 #' @author Kian Blanchette
 #' @references Thomson, David J. "Spectrum estimation and harmonic analysis." Proceedings of the IEEE 70.9 (1982): 1055-1096.
-#' @import multitaper
 #' @export
 #' @examples
 #' N <- 1024
@@ -684,8 +674,7 @@ computeEigencoefficients <- function(x, dw, nFFT){
 #' @details The estimates of the instantaneous frequency are computed for each Fourier frequency. Then the eigencoefficients and polynomial coefficients are derived for the instantaneous frequencies, which are then used to compute an F statistic.
 #' @returns ModF The P x nFFT matrix containing the multitaper polynomial modulated test statistics.
 #' @author Kian Blanchette
-#' @references  Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020.
-#' @import multitaper
+#' @references  Blanchette, Kian. Multitaper statistical tests for the detection of frequency-modulated signals. MSc. Thesis. Queen's University (Canada), 2020
 #' @export
 #' @examples
 #' N <- 1024
