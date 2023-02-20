@@ -7,4 +7,4 @@ subroutine modF(mxdeg, nord, FPcoef, Fcoef, Fp, nfreqs)
   do i=1, nfreqs
     call modFcomp(mxdeg,nord,FPcoef(:,i),Fcoef(:,i),Fp(:,i))
   end do
-end
+end subroutine

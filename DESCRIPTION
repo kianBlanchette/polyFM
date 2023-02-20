@@ -3,9 +3,11 @@ Type: Package
 Title: Estimate Carrier Frequecies in the Presence of Polynomial Frequency Modulation
 Version: 0.1.0
 Author: Kian Blanchette
-Maintainer: Kian Blanchette <18kmlb@queensu.ca>
+Maintainer: Kian Blanchette <kmlb@pm.me>
 Description: Uses the multitaper method to estimate the carrier frequency of a periodic signal (or signals) with polynomial frequency modulation. 
 Encoding: UTF-8
 LazyData: true
-Imports: multitaper
+Depends: R (>= 3.0), multitaper
+URL: https://github.com/kianBlanchette/polyFM
+License: Unlicensed
 RoxygenNote: 7.2.0

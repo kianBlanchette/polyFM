@@ -1,0 +1,8 @@
+jackknifing
+update to use .Call instead of .Fortran, and benchmark
+clean up temporary files, git files, etc
+deal with errors, warnings, notes in CRAN checklog. likely won't submit to CRAN, but it's a good way to check
+Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’
+add back the downsampled stuff eventually
+windows zip
+python

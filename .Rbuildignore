@@ -1,2 +1,9 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\\.git
+^\\.gitignore
+to_do.txt
+README.md
+.rds$
+.so$
+.o$

@@ -17,4 +17,4 @@ subroutine modFcomp(mxdeg, nord, FPcoef, Fcoef, Fp)
     Fp(L) = dble(nord-L) * FPcoef(L)**2 / (ssq1 - ssq2)
   end do
 
-end
+end subroutine
